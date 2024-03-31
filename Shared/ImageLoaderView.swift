@@ -14,7 +14,16 @@ struct ImageLoaderView: View {
     var resizingMode: ContentMode = .fill
     
     var body: some View {
-        Text("Hello World")
+        Rectangle()
+            .opacity(0.0001)
+            .overlay{
+                WebImage(url: URL(string: urlString))
+                    .resizable()
+                    .indicator(.activity)
+                    .aspectRatio(contentMode: resizingMode)
+                    .allowsHitTesting(false)
+            }
+            .clipped()
         
     }
 }
