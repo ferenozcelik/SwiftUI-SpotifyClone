@@ -14,6 +14,8 @@ struct NewReleaseCell: View {
     var subHeadline: String? = "Some Artist"
     var title: String? = "Some Playlist"
     var subTitle: String? = "Single - Title"
+    var onAddToPlaylistPressed: (() -> Void)? = nil
+    var onPlayPressed: (() -> Void)? = nil
     
     var body: some View {
         VStack(spacing: 16) {
@@ -62,23 +64,26 @@ struct NewReleaseCell: View {
                         Image(systemName: "plus.circle")
                             .foregroundStyle(.spotifyLightGray)
                             .font(.title3)
+                            .padding(4)
+                            .background(.black.opacity(0.0001))
                             .onTapGesture {
-                                
+                                onAddToPlaylistPressed?()
                             }
+                            .offset(x: -4)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
                         Image(systemName: "play.circle.fill")
                             .foregroundStyle(.spotifyWhite)
                             .font(.title)
-                            .onTapGesture {
-                                
-                            }
                     }
                 }
                 .padding(.trailing, 16).padding(.leading, 10)
             }
             .themeColors(isSelected: false)
             .cornerRadius(8)
+            .onTapGesture {
+                onPlayPressed?()
+            }
         }
     }
 }

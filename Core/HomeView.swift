@@ -19,10 +19,17 @@ struct HomeView: View {
             Color.spotifyBlack.ignoresSafeArea()
             
             ScrollView(.vertical) {
-                LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders], content: {
+                LazyVStack(spacing: 0,
+                           pinnedViews: [.sectionHeaders],
+                           content: {
                     Section {
-                        VStack {
+                        VStack(spacing: 16) {
                             recentsSection
+                            
+                            if let product = products.first {
+                                newReleaseSection(product: product)
+                            }
+                            
                         }
                         .padding(.horizontal, 16)
                         
@@ -109,5 +116,21 @@ private extension HomeView {
                 RecentsCell(imageName: product.firstImage, title: product.title)
             }
         }
+    }
+    
+    func newReleaseSection(product: Product) -> some View {
+        NewReleaseCell(
+            imageName: product.firstImage,
+            headline: product.brand,
+            subHeadline: product.category,
+            title: product.title,
+            subTitle: product.description,
+            onAddToPlaylistPressed: {
+                
+            },
+            onPlayPressed: {
+                
+            }
+        )
     }
 }
