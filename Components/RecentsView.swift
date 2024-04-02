@@ -1,5 +1,5 @@
 //
-//  RecentsCell.swift
+//  RecentsView.swift
 //  SpotifyClone
 //
 //  Created by Fatih Eren Ozcelik on 1.04.2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RecentsCell: View {
+struct RecentsView: View {
     
     var imageName: String = Constants.randomImage
     var title: String = "Some Title Example"
@@ -34,12 +34,12 @@ struct RecentsCell: View {
         Color.black.ignoresSafeArea()
         VStack {
             HStack {
-                RecentsCell()
-                RecentsCell()
+                RecentsView()
+                RecentsView()
             }
             HStack {
-                RecentsCell()
-                RecentsCell()
+                RecentsView()
+                RecentsView()
             }
         }
     }

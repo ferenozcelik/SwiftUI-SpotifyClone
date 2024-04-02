@@ -1,5 +1,5 @@
 //
-//  CategoryCell.swift
+//  CategoryView.swift
 //  SpotifyClone
 //
 //  Created by Fatih Eren Ozcelik on 31.03.2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CategoryCell: View {
+struct CategoryView: View {
     
     var title: String = "All"
     var isSelected: Bool = false
@@ -34,12 +34,12 @@ extension View {
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea()
-        CategoryCell()
+        CategoryView()
         
         VStack(spacing: 40) {
-            CategoryCell(title: "Title1")
-            CategoryCell(title: "Title2", isSelected: true)
-            CategoryCell(isSelected: false)
+            CategoryView(title: "Title1")
+            CategoryView(title: "Title2", isSelected: true)
+            CategoryView(isSelected: false)
         }
     }
 }

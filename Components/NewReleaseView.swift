@@ -1,5 +1,5 @@
 //
-//  NewReleaseCell.swift
+//  NewReleaseView.swift
 //  SpotifyClone
 //
 //  Created by Fatih Eren Ozcelik on 1.04.2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NewReleaseCell: View {
+struct NewReleaseView: View {
     
     var imageName: String = Constants.randomImage
     var headline: String? = "New release from"
@@ -38,7 +38,7 @@ struct NewReleaseCell: View {
                             .fontWeight(.medium)
                     }
                 }
-            }        
+            }
             .frame(maxWidth: .infinity, alignment: .leading)
 
             HStack {
@@ -91,7 +91,7 @@ struct NewReleaseCell: View {
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea()
-        NewReleaseCell()
+        NewReleaseView()
             .padding()
     }
 }

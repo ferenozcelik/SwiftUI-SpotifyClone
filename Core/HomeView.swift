@@ -29,11 +29,10 @@ struct HomeView: View {
                             if let product = products.first {
                                 newReleaseSection(product: product)
                             }
-                            
                         }
                         .padding(.horizontal, 16)
                         
-                        ForEach(0..<10) { _ in
+                        ForEach(0..<4) { _ in
                             Rectangle()
                                 .fill(.green)
                                 .frame(width: 200, height: 200)
@@ -92,7 +91,7 @@ private extension HomeView {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
                     ForEach(Category.allCases, id: \.self) { category in
-                        CategoryCell(
+                        CategoryView(
                             title: category.rawValue.capitalized,
                             isSelected: category == selectedCategory
                         )
@@ -113,13 +112,13 @@ private extension HomeView {
     var recentsSection: some View {
         NonLazyVGrid(columns: 2, alignment: .center, spacing: 10, items: products) { product in
             if let product {
-                RecentsCell(imageName: product.firstImage, title: product.title)
+                RecentsView(imageName: product.firstImage, title: product.title)
             }
         }
     }
     
     func newReleaseSection(product: Product) -> some View {
-        NewReleaseCell(
+        NewReleaseView(
             imageName: product.firstImage,
             headline: product.brand,
             subHeadline: product.category,
