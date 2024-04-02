@@ -1,5 +1,5 @@
 //
-//  DatabaseHelper.swift
+//  NetworkManager.swift
 //  SpotifyClone
 //
 //  Created by Fatih Eren Ozcelik on 31.03.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DatabaseHelper {
+struct NetworkManager {
     
     func getProducts() async throws -> [Product] {
         guard let url = URL(string: "https://dummyjson.com/products") else {

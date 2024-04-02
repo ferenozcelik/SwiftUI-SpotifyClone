@@ -60,8 +60,8 @@ private extension HomeView {
     
     func getData() async {
         do {
-            currentUser = try await DatabaseHelper().getUsers().first
-            products = try await Array(DatabaseHelper().getProducts().prefix(8))
+            currentUser = try await NetworkManager().getUsers().first
+            products = try await Array(NetworkManager().getProducts().prefix(8))
             
             var rows: [ProductRow] = []
             let allBrands = Set(products.map { $0.brand }) // unique brands

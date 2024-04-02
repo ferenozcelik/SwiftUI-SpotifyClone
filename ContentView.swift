@@ -31,8 +31,8 @@ struct ContentView: View {
     
     private func getData() async {
         do {
-            users = try await DatabaseHelper().getUsers()
-            products = try await DatabaseHelper().getProducts()
+            users = try await NetworkManager().getUsers()
+            products = try await NetworkManager().getProducts()
         } catch {
             
         }
