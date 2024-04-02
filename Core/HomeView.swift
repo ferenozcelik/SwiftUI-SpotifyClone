@@ -13,6 +13,7 @@ struct HomeView: View {
     @State private var currentUser: User? = nil
     @State private var selectedCategory: Category? = nil
     @State private var products: [Product] = []
+    @State private var productRows: [ProductRow] = []
     
     var body: some View {
         ZStack {
@@ -25,18 +26,16 @@ struct HomeView: View {
                     Section {
                         VStack(spacing: 16) {
                             recentsSection
+                                .padding(.horizontal, 16)
                             
                             if let product = products.first {
                                 newReleaseSection(product: product)
+                                    .padding(.horizontal, 16)
                             }
+                            
+                            listRows
                         }
-                        .padding(.horizontal, 16)
-                        
-                        ForEach(0..<4) { _ in
-                            Rectangle()
-                                .fill(.green)
-                                .frame(width: 200, height: 200)
-                        }
+//                        .padding(.horizontal, 16)
                     } header: {
                         header
                     }
@@ -63,6 +62,14 @@ private extension HomeView {
         do {
             currentUser = try await DatabaseHelper().getUsers().first
             products = try await Array(DatabaseHelper().getProducts().prefix(8))
+            
+            var rows: [ProductRow] = []
+            let allBrands = Set(products.map { $0.brand }) // unique brands
+            for brand in allBrands {
+//                let products = self.products.filter({ $0.brand == brand })
+                rows.append(ProductRow(title: brand.capitalized, products: products))
+            }
+            productRows = rows
         } catch {
             
         }
@@ -113,6 +120,9 @@ private extension HomeView {
         NonLazyVGrid(columns: 2, alignment: .center, spacing: 10, items: products) { product in
             if let product {
                 RecentsView(imageName: product.firstImage, title: product.title)
+                    .asButton(.press) {
+                        
+                    }
             }
         }
     }
@@ -131,5 +141,35 @@ private extension HomeView {
                 
             }
         )
+    }
+    
+    var listRows: some View {
+        ForEach(productRows) { row in
+            VStack(spacing: 8) {
+                Text(row.title)
+                    .font(.title)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.spotifyWhite)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 16)
+                
+                ScrollView(.horizontal) {
+                    HStack(alignment: .top, spacing: 16) {
+                        ForEach(row.products) { product in
+                            ImageTitleRowView(
+                                imageSize: 120,
+                                imageName: product.firstImage,
+                                title: product.title
+                            )
+                            .asButton(.press) {
+                                
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                }
+                .scrollIndicators(.hidden)
+            }
+        }
     }
 }

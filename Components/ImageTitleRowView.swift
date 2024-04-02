@@ -21,7 +21,10 @@ struct ImageTitleRowView: View {
             Text(title)
                 .font(.callout)
                 .foregroundStyle(.spotifyLightGray)
+                .lineLimit(2)
+                .padding(4)
         }
+        .frame(width: imageSize)
     }
 }
 
