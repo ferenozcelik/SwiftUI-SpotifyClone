@@ -8,8 +8,25 @@
 import SwiftUI
 
 struct PlaylistView: View {
+    
+    var product: Product = .mock
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color.spotifyBlack.ignoresSafeArea()
+            
+            ScrollView(.vertical) {
+                LazyVStack(spacing: 12) {
+                    PlaylistHeaderView(
+                        height: 250,
+                        title: product.title,
+                        subtitle: product.brand,
+                        imageName: product.thumbnail
+                    )
+                }
+            }
+            .scrollIndicators(.hidden)
+        }
     }
 }
 
