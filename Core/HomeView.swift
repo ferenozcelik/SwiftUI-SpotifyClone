@@ -7,9 +7,11 @@
 
 import SwiftUI
 import SwiftfulUI
+import SwiftfulRouting
 
 struct HomeView: View {
     
+    @Environment(\.router) var router
     @State private var currentUser: User? = nil
     @State private var selectedCategory: Category? = nil
     @State private var products: [Product] = []
@@ -53,12 +55,16 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    RouterView { _ in
+        HomeView()
+    }
 }
 
 private extension HomeView {
     
     func getData() async {
+        guard products.isEmpty else { return }
+        // if products array is not empty, meaning it's already fetchted and filled with data, then return and don't fetch again
         do {
             currentUser = try await NetworkManager().getUsers().first
             products = try await Array(NetworkManager().getProducts().prefix(8))
@@ -86,7 +92,7 @@ private extension HomeView {
                         .background(.spotifyWhite)
                         .clipShape(Circle())
                         .onTapGesture {
-                            
+                            router.dismissScreen()
                         }
                 } else {
                     ProgressView()
@@ -121,9 +127,16 @@ private extension HomeView {
             if let product {
                 RecentsView(imageName: product.firstImage, title: product.title)
                     .asButton(.press) {
-                        
+                        goToPlaylistView(product: product)
                     }
             }
+        }
+    }
+    
+    private func goToPlaylistView(product: Product) {
+        guard let currentUser else { return }
+        router.showScreen(.push) { _ in
+            PlaylistView(product: product, user: currentUser)
         }
     }
     
@@ -138,7 +151,7 @@ private extension HomeView {
                 
             },
             onPlayPressed: {
-                
+                goToPlaylistView(product: product)
             }
         )
     }
@@ -162,7 +175,7 @@ private extension HomeView {
                                 title: product.title
                             )
                             .asButton(.press) {
-                                
+                                goToPlaylistView(product: product)
                             }
                         }
                     }
